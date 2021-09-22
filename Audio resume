@@ -1,0 +1,73 @@
+import speech_recognition as sr
+import pyttsx3 as ts
+import PyPDF2 as pp
+import time
+import os
+
+        ####################################  clear the cmd ####################################
+
+
+def clearscr():
+    os.system('clear')
+
+        ####################################  language preference of the listener ###############################
+
+def know_language_name():
+    language=input('Which language will you prefer to listen : ').lower()
+    c=0
+    for i in voices:
+        if i.name==language:
+            # print('language index number : ',c)
+            return c
+        c+=1
+    else:
+        print('No such language is available. you will now listen in English')
+        return
+
+        ####################################  initialising from here  ####################################
+
+speaker=ts.init()
+
+        ####################################  set voice properties  ####################################
+
+speaker.setProperty('rate',135)
+speaker.setProperty('volume',0.7)
+voices=speaker.getProperty('voices')
+
+            ##################################  resume  ##################################
+
+my_name="Hello sir. This is my , audio resume. My self , Ashutosh Sahoo , from odisha ,cuttack."
+my_education=' I have completed my Bsc, in physics, in july, 2021, with, 70  percentage. I , also get 74 percentage in +2 from , Shakti junior college.'
+my_coding_journey=' i, am a bsc student but very much intrested in coding. So  i  have learnt python , html , css  and  c++  , as a  beginner, all  by self'
+my_projects=' i have done many projects using the language python ,by , myself and  , also  with  my friends. I have done the, ptojects on speech recognition , gesture control, blockchain  simple  applcation ,  advanced  victim  helping  system, Flight  booking website,  voice controled  chess , and many more ,small projects'
+my_skills=' I , also know some different things like, Photoshop , 3D Model using Blender , Powerpoint , Logo Design , 3D  Wallpaper  Design'
+my_hobbies=' My   hobbies are , Playing chess , Meditation, Sports , Going through  documetations on Robotics, now  as a ,beginner , Machine Learning  as a beginner , doing  AI Projects'
+my_objective=' My objective is , I want to get into the   computer background . To gain knowledge , on, computers working process deeply ,  Work , on many research papers and also going through it , most importantly to , be in a tech environment'
+my_end='  That\'s  all  , about  me.  Thanks  for listening  , my audio resume.'
+
+
+#######################################  main body starts from here  #########################################
+
+                ######################  user input for language preference  ##################
+
+clearscr()
+index=know_language_name()
+if (index):
+    speaker.setProperty('voice',voices[index].id)
+else:
+    confirm=input('Do you agree y/n : ').lower()
+    if confirm=='y':
+        speaker.setProperty('voice',voices[11].id)
+    else:
+        clearscr()
+        know_language_name()
+
+                    ######################  start listening now #####################
+
+intro=[ my_name,my_education,my_coding_journey,my_projects,my_skills,my_hobbies,my_objective,my_end ]
+
+for j in intro:
+    speaker.say(j)
+    time.sleep(1)
+
+speaker.runAndWait()
